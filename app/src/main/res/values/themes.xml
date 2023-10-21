@@ -1,9 +1,27 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.ArchitecturePatterns" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="fontFamily">@font/gsans_regular</item>
+        <item name="android:fontFamily">@font/gsans_regular</item>
     </style>
 
     <style name="Theme.ArchitecturePatterns" parent="Base.Theme.ArchitecturePatterns" />
+
+    <style name="Common.Body" parent="Base.Theme.ArchitecturePatterns">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Common.Body.Bold" parent="Common.Body">
+        <item name="fontFamily">@font/gsans_bold</item>
+    </style>
+
+    <style name="Common.Body.Small" parent="Common.Body">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Common.Body.Small.Bold" parent="Common.Body.Small">
+        <item name="fontFamily">@font/gsans_bold</item>
+    </style>
 </resources>
