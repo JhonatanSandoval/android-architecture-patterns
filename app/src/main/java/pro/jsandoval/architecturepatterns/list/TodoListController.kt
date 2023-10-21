@@ -2,6 +2,7 @@ package pro.jsandoval.architecturepatterns.list
 
 import android.content.Context
 import pro.jsandoval.architecturepatterns.database.TodoDatabaseRetriever
+import pro.jsandoval.architecturepatterns.database.entity.TodoEntity
 import pro.jsandoval.architecturepatterns.model.Todo
 
 class TodoListController(
@@ -19,5 +20,14 @@ class TodoListController(
                 description = item.description,
             )
         }
+    }
+
+    fun deleteTodo(todo: Todo) {
+        val todoEntity = TodoEntity(
+            id = todo.id,
+            title = todo.title,
+            description = todo.description,
+        )
+        database.todoDao.delete(todoEntity)
     }
 }

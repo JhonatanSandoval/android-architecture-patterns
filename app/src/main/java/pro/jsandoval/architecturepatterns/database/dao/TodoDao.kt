@@ -1,6 +1,7 @@
 package pro.jsandoval.architecturepatterns.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -15,6 +16,9 @@ interface TodoDao {
 
     @Update
     fun update(entity: TodoEntity)
+
+    @Delete
+    fun delete(entity: TodoEntity)
 
     @Query("SELECT * FROM todos ORDER BY id DESC")
     fun getAll(): List<TodoEntity>

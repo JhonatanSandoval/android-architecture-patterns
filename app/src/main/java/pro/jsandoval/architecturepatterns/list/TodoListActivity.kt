@@ -2,8 +2,10 @@ package pro.jsandoval.architecturepatterns.list
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import pro.jsandoval.architecturepatterns.R
 import pro.jsandoval.architecturepatterns.databinding.ActivityTodoListBinding
 import pro.jsandoval.architecturepatterns.details.TODO_PARAM
 import pro.jsandoval.architecturepatterns.details.TodoDetailsActivity
@@ -13,7 +15,13 @@ class TodoListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTodoListBinding
 
-    private val todoListAdapter by lazy { TodoListAdapter(onItemClicked = { todo -> openTodoDetailsActivity(todo) }) }
+    private val todoListAdapter by lazy {
+        TodoListAdapter(
+            onItemClicked = { todo -> openTodoDetailsActivity(todo) },
+            onDelete = { todo -> showDeleteDialog(todo) }
+        )
+    }
+
     private val controller by lazy { TodoListController(context = this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +39,18 @@ class TodoListActivity : AppCompatActivity() {
             putExtra(TODO_PARAM, todo)
         }
         startActivity(intent)
+    }
+
+    private fun showDeleteDialog(todo: Todo) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.delete_todo_title)
+            .setMessage(R.string.delete_todo_description)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.yes_delete_todo) { _, _ ->
+                controller.deleteTodo(todo)
+                handleTodoList(controller.getCurrentTodoList())
+            }
+            .show()
     }
 
     private fun handleTodoList(todos: List<Todo>) {

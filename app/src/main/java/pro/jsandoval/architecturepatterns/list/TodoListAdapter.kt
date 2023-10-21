@@ -10,6 +10,7 @@ import pro.jsandoval.architecturepatterns.model.Todo
 
 class TodoListAdapter(
     private val onItemClicked: (Todo) -> Unit,
+    private val onDelete: (Todo) -> Unit,
 ) : ListAdapter<Todo, TodoItemViewHolder>(TodoItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoItemViewHolder {
@@ -19,7 +20,7 @@ class TodoListAdapter(
 
     override fun onBindViewHolder(holder: TodoItemViewHolder, position: Int) {
         val item = getItem(position) ?: return
-        holder.bind(item, onItemClicked)
+        holder.bind(item, onItemClicked, onDelete)
     }
 }
 
@@ -33,8 +34,12 @@ class TodoItemViewHolder(
     private val binding: ItemTodoListBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(todo: Todo, onItemClicked: (Todo) -> Unit) {
-        binding.root.setOnClickListener { onItemClicked.invoke((todo)) }
+    fun bind(todo: Todo, onItemClicked: (Todo) -> Unit, onDelete: (Todo) -> Unit) {
+        binding.root.setOnClickListener { onItemClicked.invoke(todo) }
+        binding.root.setOnLongClickListener {
+            onDelete.invoke(todo)
+            true
+        }
         binding.todoTitle.text = todo.title
         binding.todoDescription.text = todo.description
     }
