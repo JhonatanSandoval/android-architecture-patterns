@@ -8,4 +8,9 @@ data class Todo(
     val id: Long,
     var title: String,
     var description: String,
-) : Parcelable
+) : Parcelable {
+
+    companion object {
+        fun create(): Todo = Todo(id = 0, title = "", description = "")
+    }
+}

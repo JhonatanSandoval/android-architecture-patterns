@@ -11,7 +11,7 @@ import pro.jsandoval.architecturepatterns.details.TODO_PARAM
 import pro.jsandoval.architecturepatterns.details.TodoDetailsActivity
 import pro.jsandoval.architecturepatterns.model.Todo
 
-class TodoListActivity : AppCompatActivity() {
+class TodoListActivity : AppCompatActivity(), TodoListContract.View {
 
     private lateinit var binding: ActivityTodoListBinding
 
@@ -22,7 +22,9 @@ class TodoListActivity : AppCompatActivity() {
         )
     }
 
-    private val controller by lazy { TodoListController(context = this) }
+    private val presenter: TodoListContract.Presenter by lazy {
+        TodoListPresenter(view = this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,13 +49,12 @@ class TodoListActivity : AppCompatActivity() {
             .setMessage(R.string.delete_todo_description)
             .setNegativeButton(R.string.cancel, null)
             .setPositiveButton(R.string.yes_delete_todo) { _, _ ->
-                controller.deleteTodo(todo)
-                handleTodoList(controller.getCurrentTodoList())
+                presenter.deleteTodo(todo)
             }
             .show()
     }
 
-    private fun handleTodoList(todos: List<Todo>) {
+    override fun showTodoList(todos: List<Todo>) {
         todoListAdapter.submitList(todos)
         binding.todoList.isVisible = todos.isNotEmpty()
         binding.noTodoListYet.isVisible = todos.isEmpty()
@@ -61,7 +62,7 @@ class TodoListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        handleTodoList(controller.getCurrentTodoList())
+        presenter.fetchTodoList()
     }
 
     private fun setupBinding() {

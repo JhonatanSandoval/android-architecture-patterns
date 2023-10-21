@@ -7,12 +7,13 @@ object TodoDatabaseRetriever {
 
     private var todoDatabase: TodoDatabase? = null
 
-    fun getDatabase(context: Context): TodoDatabase {
+    fun init(context: Context) {
         if (todoDatabase == null) {
             todoDatabase = Room.databaseBuilder(context, TodoDatabase::class.java, "todo-db")
                 .allowMainThreadQueries()
                 .build()
         }
-        return todoDatabase!!
     }
+
+    fun getDatabase(): TodoDatabase = requireNotNull(todoDatabase) { "'init' method must be called first" }
 }
