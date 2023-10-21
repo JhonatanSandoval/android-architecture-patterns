@@ -18,6 +18,7 @@ class TodoDetailsController(
     }
 
     fun saveTodo(title: String, description: String) {
+        if (title.isEmpty() || description.isEmpty()) return
         todo?.let {
             it.title = title
             it.description = description
