@@ -66,11 +66,6 @@ class TodoListActivity : AppCompatActivity() {
         binding.noTodoListYet.isVisible = todos.isEmpty()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.fetchTodoList()
-    }
-
     private fun setupBinding() {
         binding = ActivityTodoListBinding.inflate(layoutInflater)
         setContentView(binding.root)

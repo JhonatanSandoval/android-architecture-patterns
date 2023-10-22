@@ -4,3 +4,11 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
     id("com.google.dagger.hilt.android") version "2.48.1" apply false
 }
+
+allprojects {
+    configurations.all {
+        resolutionStrategy {
+            force("org.xerial:sqlite-jdbc:3.34.0")
+        }
+    }
+}

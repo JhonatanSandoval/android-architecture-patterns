@@ -17,7 +17,6 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): TodoDatabase {
         return Room.databaseBuilder(context, TodoDatabase::class.java, "todo-db")
-            .allowMainThreadQueries()
             .build()
     }
 }

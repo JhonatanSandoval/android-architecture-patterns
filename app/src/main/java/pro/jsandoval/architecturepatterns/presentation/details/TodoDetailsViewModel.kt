@@ -3,18 +3,17 @@ package pro.jsandoval.architecturepatterns.presentation.details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import pro.jsandoval.architecturepatterns.data.database.TodoDatabase
-import pro.jsandoval.architecturepatterns.data.mapper.toTodoEntity
+import kotlinx.coroutines.launch
 import pro.jsandoval.architecturepatterns.domain.model.Todo
+import pro.jsandoval.architecturepatterns.domain.usecase.SaveTodoUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class TodoDetailsViewModel @Inject constructor(
-    private val todoDatabase: TodoDatabase,
+    private val saveTodoUseCase: SaveTodoUseCase,
 ) : ViewModel() {
-
-    private val todoDao by lazy { todoDatabase.todoDao }
 
     private val _initialTodo = MutableLiveData<Todo>()
     val initialTodo: LiveData<Todo> = _initialTodo
@@ -23,11 +22,9 @@ class TodoDetailsViewModel @Inject constructor(
     val todoSaved: LiveData<Unit> = _todoSaved
 
     private lateinit var todo: Todo
-    private var isEditing: Boolean = false
 
     fun setTodoReceived(todoReceived: Todo?) {
         this.todo = todoReceived ?: Todo.create()
-        this.isEditing = todoReceived != null
         _initialTodo.value = this.todo
     }
 
@@ -36,13 +33,10 @@ class TodoDetailsViewModel @Inject constructor(
         todo.description = description
 
         if (isValidToSaved(todo)) {
-            val entity = todo.toTodoEntity()
-            if (isEditing) {
-                todoDao.update(entity)
-            } else {
-                todoDao.insert(entity)
+            viewModelScope.launch {
+                saveTodoUseCase(todo)
+                _todoSaved.value = Unit
             }
-            _todoSaved.value = Unit
         }
     }
 
