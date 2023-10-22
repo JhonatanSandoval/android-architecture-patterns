@@ -3,13 +3,18 @@ package pro.jsandoval.architecturepatterns.details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import pro.jsandoval.architecturepatterns.database.TodoDatabaseRetriever
+import dagger.hilt.android.lifecycle.HiltViewModel
+import pro.jsandoval.architecturepatterns.database.TodoDatabase
 import pro.jsandoval.architecturepatterns.mapper.toTodoEntity
 import pro.jsandoval.architecturepatterns.model.Todo
+import javax.inject.Inject
 
-class TodoDetailsViewModel : ViewModel() {
+@HiltViewModel
+class TodoDetailsViewModel @Inject constructor(
+    private val todoDatabase: TodoDatabase,
+) : ViewModel() {
 
-    private val todoDao by lazy { TodoDatabaseRetriever.getDatabase().todoDao }
+    private val todoDao by lazy { todoDatabase.todoDao }
 
     private val _initialTodo = MutableLiveData<Todo>()
     val initialTodo: LiveData<Todo> = _initialTodo

@@ -1,12 +1,7 @@
 package pro.jsandoval.architecturepatterns
 
 import android.app.Application
-import pro.jsandoval.architecturepatterns.database.TodoDatabaseRetriever
+import dagger.hilt.android.HiltAndroidApp
 
-class App : Application() {
-
-    override fun onCreate() {
-        super.onCreate()
-        TodoDatabaseRetriever.init(this)
-    }
-}
+@HiltAndroidApp
+class App : Application()

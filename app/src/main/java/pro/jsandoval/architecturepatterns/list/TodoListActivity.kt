@@ -6,12 +6,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import dagger.hilt.android.AndroidEntryPoint
 import pro.jsandoval.architecturepatterns.R
 import pro.jsandoval.architecturepatterns.databinding.ActivityTodoListBinding
 import pro.jsandoval.architecturepatterns.details.TODO_PARAM
 import pro.jsandoval.architecturepatterns.details.TodoDetailsActivity
 import pro.jsandoval.architecturepatterns.model.Todo
 
+@AndroidEntryPoint
 class TodoListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTodoListBinding

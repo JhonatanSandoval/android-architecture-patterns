@@ -3,11 +3,13 @@ package pro.jsandoval.architecturepatterns.details
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import pro.jsandoval.architecturepatterns.databinding.ActivityTodoDetailsBinding
 import pro.jsandoval.architecturepatterns.model.Todo
 
 const val TODO_PARAM = "todo"
 
+@AndroidEntryPoint
 class TodoDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTodoDetailsBinding
