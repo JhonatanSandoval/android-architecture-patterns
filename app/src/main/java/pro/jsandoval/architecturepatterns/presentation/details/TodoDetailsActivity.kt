@@ -2,19 +2,20 @@ package pro.jsandoval.architecturepatterns.presentation.details
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
+import pro.jsandoval.architecturepatterns.R
 import pro.jsandoval.architecturepatterns.databinding.ActivityTodoDetailsBinding
 import pro.jsandoval.architecturepatterns.domain.model.Todo
+import pro.jsandoval.architecturepatterns.presentation.base.BaseActivity
 
 const val TODO_PARAM = "todo"
 
 @AndroidEntryPoint
-class TodoDetailsActivity : AppCompatActivity() {
+class TodoDetailsActivity : BaseActivity() {
 
     private lateinit var binding: ActivityTodoDetailsBinding
 
-    private val viewModel: TodoDetailsViewModel by viewModels()
+    private val viewModel: TodoDetailsViewModel by viewModels<TodoDetailsViewModelImpl>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,7 @@ class TodoDetailsActivity : AppCompatActivity() {
     private fun validateTodoParameter() {
         intent?.apply {
             val todoReceived = getParcelableExtra<Todo>(TODO_PARAM)
-            viewModel.setTodoReceived(todoReceived)
+            viewModel.onTodoReceived(todoReceived)
         }
     }
 
@@ -35,6 +36,8 @@ class TodoDetailsActivity : AppCompatActivity() {
         viewModel.initialTodo.observe(this) { todo ->
             todo?.let { setInitialInfo(todo.title, todo.description) }
         }
+        viewModel.titleError.observe(this) { simpleToastMessage(R.string.error_todo_title) }
+        viewModel.descriptionError.observe(this) { simpleToastMessage(R.string.error_todo_description) }
     }
 
     private fun setInitialInfo(title: String, description: String) {
@@ -44,7 +47,7 @@ class TodoDetailsActivity : AppCompatActivity() {
 
     private fun setupViews() = with(binding) {
         saveButton.setOnClickListener {
-            viewModel.saveTodoInfo(
+            viewModel.onSaveTodo(
                 title = binding.todoTitle.text.toString().trim(),
                 description = binding.todoDescription.text.toString().trim(),
             )

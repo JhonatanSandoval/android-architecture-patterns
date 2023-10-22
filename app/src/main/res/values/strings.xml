@@ -10,4 +10,6 @@
     <string name="delete_todo_description">Delete TODO selected?</string>
     <string name="yes_delete_todo">Yes, delete TODO.</string>
     <string name="cancel">Cancel</string>
+    <string name="error_todo_title">Title must not be empty.</string>
+    <string name="error_todo_description">Description must not be empty.</string>
 </resources>

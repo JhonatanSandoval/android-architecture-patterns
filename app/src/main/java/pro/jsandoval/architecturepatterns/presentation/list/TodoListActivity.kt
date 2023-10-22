@@ -9,9 +9,9 @@ import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import pro.jsandoval.architecturepatterns.R
 import pro.jsandoval.architecturepatterns.databinding.ActivityTodoListBinding
+import pro.jsandoval.architecturepatterns.domain.model.Todo
 import pro.jsandoval.architecturepatterns.presentation.details.TODO_PARAM
 import pro.jsandoval.architecturepatterns.presentation.details.TodoDetailsActivity
-import pro.jsandoval.architecturepatterns.domain.model.Todo
 
 @AndroidEntryPoint
 class TodoListActivity : AppCompatActivity() {
@@ -25,7 +25,7 @@ class TodoListActivity : AppCompatActivity() {
         )
     }
 
-    private val viewModel: TodoListViewModel by viewModels()
+    private val viewModel: TodoListViewModel by viewModels<TodoListViewModelImpl>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +55,7 @@ class TodoListActivity : AppCompatActivity() {
             .setMessage(R.string.delete_todo_description)
             .setNegativeButton(R.string.cancel, null)
             .setPositiveButton(R.string.yes_delete_todo) { _, _ ->
-                viewModel.deleteTodo(todo)
+                viewModel.onDeleteTodo(todo)
             }
             .show()
     }

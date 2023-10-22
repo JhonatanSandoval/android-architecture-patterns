@@ -21,4 +21,8 @@ interface UseCaseModule {
     @Binds
     @ViewModelScoped
     fun bindSaveTodoUseCase(impl: SaveTodoUseCaseImpl): SaveTodoUseCase
+
+    @Binds
+    @ViewModelScoped
+    fun bindValidateTodoUseCase(impl: ValidateTodoUseCaseImpl): ValidateTodoUseCase
 }
