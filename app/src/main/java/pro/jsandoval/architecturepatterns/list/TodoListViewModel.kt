@@ -1,23 +1,27 @@
 package pro.jsandoval.architecturepatterns.list
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import pro.jsandoval.architecturepatterns.database.TodoDatabaseRetriever
 import pro.jsandoval.architecturepatterns.mapper.toTodo
 import pro.jsandoval.architecturepatterns.mapper.toTodoEntity
 import pro.jsandoval.architecturepatterns.model.Todo
 
-class TodoListPresenter(
-    private val view: TodoListContract.View,
-) : TodoListContract.Presenter {
+class TodoListViewModel : ViewModel() {
 
     private val todoDao by lazy { TodoDatabaseRetriever.getDatabase().todoDao }
 
-    override fun fetchTodoList() {
+    private val _todos = MutableLiveData<List<Todo>>()
+    val todos: LiveData<List<Todo>> = _todos
+
+    fun fetchTodoList() {
         val todos = todoDao.getAll()
         val todosMapped = todos.map { it.toTodo() }
-        view.showTodoList(todosMapped)
+        _todos.value = todosMapped
     }
 
-    override fun deleteTodo(todo: Todo) {
+    fun deleteTodo(todo: Todo) {
         todoDao.delete(todo.toTodoEntity())
         fetchTodoList()
     }

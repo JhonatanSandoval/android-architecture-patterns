@@ -2,6 +2,7 @@ package pro.jsandoval.architecturepatterns.list
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -11,7 +12,7 @@ import pro.jsandoval.architecturepatterns.details.TODO_PARAM
 import pro.jsandoval.architecturepatterns.details.TodoDetailsActivity
 import pro.jsandoval.architecturepatterns.model.Todo
 
-class TodoListActivity : AppCompatActivity(), TodoListContract.View {
+class TodoListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTodoListBinding
 
@@ -22,13 +23,16 @@ class TodoListActivity : AppCompatActivity(), TodoListContract.View {
         )
     }
 
-    private val presenter: TodoListContract.Presenter by lazy {
-        TodoListPresenter(view = this)
-    }
+    private val viewModel: TodoListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupBinding()
+        observeLiveData()
+    }
+
+    private fun observeLiveData() {
+        viewModel.todos.observe(this, ::showTodoList)
     }
 
     private fun setupViews() = with(binding) {
@@ -49,12 +53,12 @@ class TodoListActivity : AppCompatActivity(), TodoListContract.View {
             .setMessage(R.string.delete_todo_description)
             .setNegativeButton(R.string.cancel, null)
             .setPositiveButton(R.string.yes_delete_todo) { _, _ ->
-                presenter.deleteTodo(todo)
+                viewModel.deleteTodo(todo)
             }
             .show()
     }
 
-    override fun showTodoList(todos: List<Todo>) {
+    private fun showTodoList(todos: List<Todo>) {
         todoListAdapter.submitList(todos)
         binding.todoList.isVisible = todos.isNotEmpty()
         binding.noTodoListYet.isVisible = todos.isEmpty()
@@ -62,7 +66,7 @@ class TodoListActivity : AppCompatActivity(), TodoListContract.View {
 
     override fun onResume() {
         super.onResume()
-        presenter.fetchTodoList()
+        viewModel.fetchTodoList()
     }
 
     private fun setupBinding() {

@@ -1,43 +1,48 @@
 package pro.jsandoval.architecturepatterns.details
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import pro.jsandoval.architecturepatterns.databinding.ActivityTodoDetailsBinding
 import pro.jsandoval.architecturepatterns.model.Todo
 
 const val TODO_PARAM = "todo"
 
-class TodoDetailsActivity : AppCompatActivity(), TodoDetailsContract.View {
+class TodoDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTodoDetailsBinding
 
-    private val presenter: TodoDetailsContract.Presenter by lazy {
-        TodoDetailsPresenter(view = this)
-    }
+    private val viewModel: TodoDetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupBinding()
         validateTodoParameter()
+        observeLiveData()
     }
 
     private fun validateTodoParameter() {
         intent?.apply {
             val todoReceived = getParcelableExtra<Todo>(TODO_PARAM)
-            presenter.setTodoReceived(todoReceived)
+            viewModel.setTodoReceived(todoReceived)
         }
     }
 
-    override fun setInitialInfo(title: String, description: String) {
+    private fun observeLiveData() {
+        viewModel.todoSaved.observe(this) { finish() }
+        viewModel.initialTodo.observe(this) { todo ->
+            todo?.let { setInitialInfo(todo.title, todo.description) }
+        }
+    }
+
+    private fun setInitialInfo(title: String, description: String) {
         binding.todoTitle.setText(title)
         binding.todoDescription.setText(description)
     }
 
-    override fun todoSaved() = finish()
-
     private fun setupViews() = with(binding) {
         saveButton.setOnClickListener {
-            presenter.saveTodoInfo(
+            viewModel.saveTodoInfo(
                 title = binding.todoTitle.text.toString().trim(),
                 description = binding.todoDescription.text.toString().trim(),
             )
