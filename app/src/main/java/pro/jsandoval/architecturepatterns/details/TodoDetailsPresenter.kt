@@ -11,9 +11,11 @@ class TodoDetailsPresenter(
     private val todoDao by lazy { TodoDatabaseRetriever.getDatabase().todoDao }
 
     private var todo: Todo? = null
+    private var isEditing: Boolean = false
 
     override fun setTodoReceived(todoReceived: Todo?) {
         this.todo = todoReceived ?: Todo.create()
+        this.isEditing = todoReceived != null
         view.setInitialInfo(todo!!.title, todo!!.description)
     }
 
@@ -22,14 +24,18 @@ class TodoDetailsPresenter(
             todoToSaved.title = title
             todoToSaved.description = description
 
-            val entity = todoToSaved.toTodoEntity()
-            val isNewTodo = todoToSaved.id == 0L
-            if (isNewTodo) {
-                todoDao.insert(entity)
-            } else {
-                todoDao.update(entity)
+            if (isValidToSaved(todoToSaved)) {
+                val entity = todoToSaved.toTodoEntity()
+                if (isEditing) {
+                    todoDao.update(entity)
+                } else {
+                    todoDao.insert(entity)
+                }
+                view.todoSaved()
             }
-            view.todoSaved()
         }
     }
+
+    private fun isValidToSaved(todo: Todo): Boolean =
+        todo.title.isNotBlank() && todo.description.isNotBlank()
 }

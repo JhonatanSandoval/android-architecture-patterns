@@ -9,7 +9,7 @@ interface TodoDetailsContract {
     }
 
     interface Presenter {
-        fun setTodoReceived(todo: Todo?)
+        fun setTodoReceived(todoReceived: Todo?)
         fun saveTodoInfo(title: String, description: String)
     }
 }
