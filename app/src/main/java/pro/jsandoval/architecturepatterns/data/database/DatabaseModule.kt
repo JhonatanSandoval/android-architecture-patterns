@@ -1,4 +1,4 @@
-package pro.jsandoval.architecturepatterns.database
+package pro.jsandoval.architecturepatterns.data.database
 
 import android.content.Context
 import androidx.room.Room

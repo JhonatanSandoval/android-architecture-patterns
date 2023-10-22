@@ -1,9 +1,9 @@
-package pro.jsandoval.architecturepatterns.database
+package pro.jsandoval.architecturepatterns.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import pro.jsandoval.architecturepatterns.database.dao.TodoDao
-import pro.jsandoval.architecturepatterns.database.entity.TodoEntity
+import pro.jsandoval.architecturepatterns.data.database.dao.TodoDao
+import pro.jsandoval.architecturepatterns.data.database.entity.TodoEntity
 
 @Database(
     entities = [TodoEntity::class],

@@ -1,7 +1,7 @@
-package pro.jsandoval.architecturepatterns.mapper
+package pro.jsandoval.architecturepatterns.data.mapper
 
-import pro.jsandoval.architecturepatterns.database.entity.TodoEntity
-import pro.jsandoval.architecturepatterns.model.Todo
+import pro.jsandoval.architecturepatterns.data.database.entity.TodoEntity
+import pro.jsandoval.architecturepatterns.domain.model.Todo
 
 fun TodoEntity.toTodo(): Todo {
     return Todo(

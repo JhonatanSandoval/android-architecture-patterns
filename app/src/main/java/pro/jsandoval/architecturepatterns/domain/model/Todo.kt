@@ -1,4 +1,4 @@
-package pro.jsandoval.architecturepatterns.model
+package pro.jsandoval.architecturepatterns.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -1,12 +1,12 @@
-package pro.jsandoval.architecturepatterns.details
+package pro.jsandoval.architecturepatterns.presentation.details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import pro.jsandoval.architecturepatterns.database.TodoDatabase
-import pro.jsandoval.architecturepatterns.mapper.toTodoEntity
-import pro.jsandoval.architecturepatterns.model.Todo
+import pro.jsandoval.architecturepatterns.data.database.TodoDatabase
+import pro.jsandoval.architecturepatterns.data.mapper.toTodoEntity
+import pro.jsandoval.architecturepatterns.domain.model.Todo
 import javax.inject.Inject
 
 @HiltViewModel

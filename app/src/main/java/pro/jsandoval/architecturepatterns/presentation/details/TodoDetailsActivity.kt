@@ -1,11 +1,11 @@
-package pro.jsandoval.architecturepatterns.details
+package pro.jsandoval.architecturepatterns.presentation.details
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import pro.jsandoval.architecturepatterns.databinding.ActivityTodoDetailsBinding
-import pro.jsandoval.architecturepatterns.model.Todo
+import pro.jsandoval.architecturepatterns.domain.model.Todo
 
 const val TODO_PARAM = "todo"
 

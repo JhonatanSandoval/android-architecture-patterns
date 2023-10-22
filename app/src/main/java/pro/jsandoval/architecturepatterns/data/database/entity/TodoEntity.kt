@@ -1,4 +1,4 @@
-package pro.jsandoval.architecturepatterns.database.entity
+package pro.jsandoval.architecturepatterns.data.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -1,4 +1,4 @@
-package pro.jsandoval.architecturepatterns.list
+package pro.jsandoval.architecturepatterns.presentation.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import pro.jsandoval.architecturepatterns.databinding.ItemTodoListBinding
-import pro.jsandoval.architecturepatterns.model.Todo
+import pro.jsandoval.architecturepatterns.domain.model.Todo
 
 class TodoListAdapter(
     private val onItemClicked: (Todo) -> Unit,

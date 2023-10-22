@@ -1,4 +1,4 @@
-package pro.jsandoval.architecturepatterns.list
+package pro.jsandoval.architecturepatterns.presentation.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,9 +9,9 @@ import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import pro.jsandoval.architecturepatterns.R
 import pro.jsandoval.architecturepatterns.databinding.ActivityTodoListBinding
-import pro.jsandoval.architecturepatterns.details.TODO_PARAM
-import pro.jsandoval.architecturepatterns.details.TodoDetailsActivity
-import pro.jsandoval.architecturepatterns.model.Todo
+import pro.jsandoval.architecturepatterns.presentation.details.TODO_PARAM
+import pro.jsandoval.architecturepatterns.presentation.details.TodoDetailsActivity
+import pro.jsandoval.architecturepatterns.domain.model.Todo
 
 @AndroidEntryPoint
 class TodoListActivity : AppCompatActivity() {

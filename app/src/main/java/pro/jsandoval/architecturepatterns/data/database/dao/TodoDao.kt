@@ -1,4 +1,4 @@
-package pro.jsandoval.architecturepatterns.database.dao
+package pro.jsandoval.architecturepatterns.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import pro.jsandoval.architecturepatterns.database.entity.TodoEntity
+import pro.jsandoval.architecturepatterns.data.database.entity.TodoEntity
 
 @Dao
 interface TodoDao {
